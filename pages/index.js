@@ -1,4 +1,6 @@
+import About, { AboutBox } from "@/components/Home/About";
 import Hero from "@/components/Home/Hero";
+import Steps from "@/components/Home/Steps";
 import Head from "next/head";
 
 export default function Home() {
@@ -11,6 +13,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
+      <About />
+      <Steps />
+      <div className="w-[90%] mx-auto flex justify-center items-center mt-20">
+        <AboutBox
+          order
+          min={false}
+          img="/heroes_rocket.svg"
+          heading="Tech stack"
+        />
+      </div>
     </>
   );
 }
