@@ -43,16 +43,22 @@ const StepBox = ({ order, title, img, para }) => {
     <div
       className={`${
         order ? "flex-col lg:flex-row-reverse" : "flex-col lg:flex-row"
-      } bg-white w-full lg:w-[80%] gap-2 lg:gap-10  rounded-[30px] sm:rounded-[96px] px-5 sm:px-[40px] xl:px-[70px] py-[40px] xl:h-[672px] flex justify-between items-center`}
+      } bg-white w-full lg:w-[80%] gap-2 lg:gap-10  rounded-[30px] sm:rounded-[96px] px-5 sm:px-[40px] xl:px-[70px] py-[40px] h-[600px] flex justify-between items-center`}
     >
       <div className="w-full flex justify-start items-center text-center lg:text-left lg:items-start flex-col lg:gap-5">
         <h2 className="text-black text-[40px] sm:text-[60px] font-dumbledore font-medium">
           {title}
         </h2>
-        <p className="text-black text-xl sm:text-[28px]">{para}</p>
+        <p className="text-black text-xl sm:text-xl">{para}</p>
       </div>
       <div className="w-full lg:max-w-none max-w-[500px]">
-        <Image width={1000} height={1000} alt="...." src={img} />
+        <Image
+          width={500}
+          height={500}
+          style={{ objectFit: "contain" }}
+          alt="...."
+          src={img}
+        />
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const About = () => {
         />
         <AboutBox
           img="/heroes_stairs_white_flag.svg"
-          heading="Sprints Package"
+          heading="Sprints Roadmap"
           order
         />
       </div>
@@ -36,7 +36,7 @@ const About = () => {
 
 export default About;
 
-export const AboutBox = ({ min = true, order, img, heading, desc }) => {
+export const AboutBox = ({ black, order, img, heading, desc }) => {
   return (
     <div
       className={`flex justify-center items-center ${
@@ -46,18 +46,22 @@ export const AboutBox = ({ min = true, order, img, heading, desc }) => {
       } gap-5`}
     >
       <div className={`w-[85%] md:w-full lg:max-w-none max-w-[450px]`}>
-        <Image width={1000} height={1000} src={img} alt="..." />
+        <Image
+          width={700}
+          height={600}
+          style={{ objectFit: "contain" }}
+          src={img}
+          alt="..."
+        />
       </div>
       <div
         className={` w-full flex justify-start items-center lg:text-left text-center lg:items-start flex-col gap-8`}
       >
         <h2
-          className={`text-white ${
+          className={`${black ? "text-black" : "text-white"} ${
             desc?.length > 0
-              ? "text-[50px] sm:text-[80px] xl:text-[96px] w-auto"
-              : `text-[50px] sm:text-[96px] xl:text-[134px] ${
-                  min ? "w-min" : "w-auto"
-                } `
+              ? "text-[50px] sm:text-[80px] xl:text-[68px] "
+              : `text-[50px] sm:text-[96px] xl:text-[75pxpx]`
           } font-dumbledore leading-[1.1]`}
         >
           {heading}
@@ -66,7 +70,7 @@ export const AboutBox = ({ min = true, order, img, heading, desc }) => {
           {desc?.map((elem, idx) => {
             return (
               <p
-                className="leading-[1] text-white text-xl xl:text-[28px]"
+                className="leading-[1] text-white text-base xl:text-xl"
                 key={elem + idx}
               >
                 {elem}
