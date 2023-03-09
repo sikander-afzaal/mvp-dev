@@ -18,9 +18,10 @@ export default function Home() {
       <Hero />
       <About />
       <Steps />
-
+      <div className="w-full flex justify-center items-center mt-20">
+        <AboutBox order img="/heroes_rocket.svg" heading="Tech stack" />
+      </div>
       <div className="w-full py-[60px] mt-20 lg:pb-[120px] lg:pt-[40px] bg-white flex justify-center items-center flex-col ">
-        <AboutBox order black img="/heroes_rocket.svg" heading="Tech stack" />
         <Aws />
         <Frameworks />
         <div className="flex mx-auto gap-20 justify- text-center items-center w-[90%] flex-col mt-[100px]">

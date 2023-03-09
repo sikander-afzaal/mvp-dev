@@ -41,10 +41,10 @@ const FrameBox = ({ img, title, para }) => {
     <div className="text-center lg:text-left flex lg:flex-row flex-col justify-start items-center gap-6 sm:gap-10 w-full">
       <Image src={img} width={192} height={192} alt="..." />
       <div className="flex justify-start items-center lg:items-start flex-col gap-2">
-        <h3 className="text-white text-[60px] sm:text-[96px] leading-[1] font-medium font-dumbledore">
+        <h3 className="text-white text-[50px] sm:text-[70px] leading-[1] font-medium ">
           {title}
         </h3>
-        <p className="text-white text-xl sm:text-[28px]">{para}</p>
+        <p className="text-white text-xl sm:text-[24px]">{para}</p>
       </div>
     </div>
   );
