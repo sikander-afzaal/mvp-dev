@@ -1,16 +1,16 @@
 @font-face {
   font-family: "MVP-Minecraft";
-  src: url("/fonts/Raleway.ttf");
+  src: url("/fonts/Raleway.woff2");
 }
 
 @font-face {
   font-family: "MVP-Dumbuledore";
-  src: url("/fonts/Haettenschweiler_Regular.ttf");
+  src: url("/fonts/Haettenschweiler_Regular.woff2");
 }
 
 @font-face {
   font-family: "MVP-Serious";
-  src: url("/fonts/Highman_Trial.ttf");
+  src: url("/fonts/Highman_Trial.woff2");
 }
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
