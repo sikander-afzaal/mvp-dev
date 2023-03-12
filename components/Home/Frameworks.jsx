@@ -11,22 +11,27 @@ const Frameworks = () => {
           <FrameBox
             img={"/react_icon.svg"}
             title="React"
-            para="Best frameworks for scaling"
+            para="Allows your project to scale"
           />
           <FrameBox
-            img={"/query_icon.svg"}
-            title="React Query"
-            para="Best library for Async calls"
-          />
-          <FrameBox
-            img={"/recoil_icon.svg"}
-            title="Recoil"
-            para="Best library for state managment"
+            img={"/vault_icon.svg"}
+            title="Vault"
+            para="Secures your application from attackers"
           />
           <FrameBox
             img={"/node_icon.svg"}
             title="Node"
             para="Most used backend language."
+          />
+          <FrameBox
+            img={"/ios_icon.svg"}
+            title="iOS"
+            para="For your iOS users"
+          />
+          <FrameBox
+            img={"/android_icon.svg"}
+            title="Android"
+            para="For your Android users"
           />
         </div>
       </div>
@@ -36,15 +41,15 @@ const Frameworks = () => {
 
 export default Frameworks;
 
-const FrameBox = ({ img, title, para }) => {
+const FrameBox = props => {
   return (
     <div className="text-center lg:text-left flex lg:flex-row flex-col justify-start items-center gap-6 sm:gap-10 w-full">
-      <Image src={img} width={192} height={192} alt="..." />
+      <Image src={props?.img} width={192} height={192} alt="..." />
       <div className="flex justify-start items-center lg:items-start flex-col gap-2">
         <h3 className="text-white font-dumbledore text-[50px] sm:text-[70px] leading-[1] font-medium ">
-          {title}
+          {props?.title}
         </h3>
-        <p className="text-white text-xl sm:text-[24px]">{para}</p>
+        <p className="text-white text-xl sm:text-[24px]">{props?.para}</p>
       </div>
     </div>
   );

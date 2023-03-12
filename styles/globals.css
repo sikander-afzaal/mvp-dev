@@ -20,7 +20,7 @@
 
 @layer base {
   body {
-    @apply bg-darkBlue;
+    @apply bg-lightChocolate;
   }
 }
 body::-webkit-scrollbar {

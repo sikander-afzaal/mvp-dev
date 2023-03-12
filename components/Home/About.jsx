@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div className="w-full flex mt-20 justify-center items-center flex-col">
       <div className="flex gap-16 justify-center items-center flex-col w-[90%]">
-        <AboutBox order img="/heroes_talking.svg" heading="Sprints Package" />
+        <AboutBox order img="/heroes_talking.svg" heading="Package" />
         <AboutBox
           img="/heroes_meeting.svg"
           heading="Software sprints"
@@ -16,7 +16,6 @@ const About = () => {
           desc={[
             "Smaller payments.",
             "Pay one sprint at a time.",
-            "Stop whenever you want.",
           ]}
         />
         <AboutBox
@@ -26,7 +25,7 @@ const About = () => {
         />
         <AboutBox
           img="/heroes_stairs_white_flag.svg"
-          heading="Sprints Roadmap"
+          heading="Sprints"
           order
         />
       </div>
