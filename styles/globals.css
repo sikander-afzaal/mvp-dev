@@ -39,3 +39,29 @@ body::-webkit-scrollbar-thumb {
     display: none;
   }
 }
+
+.nice-scrollbar {
+  height: calc(100vh - 300px);
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+.nice-scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+}
+
+/* Chrome, Edge, and Safari */
+.nice-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.nice-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0);
+}
+
+.nice-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 10px;
+  border: 3px solid #000000;
+}
