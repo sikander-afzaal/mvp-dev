@@ -20,11 +20,12 @@ module.exports = {
       },
       boxShadow: {
         button: "-5px 6px 2px #000",
+        button2: "-12px 17px 2px #000",
       },
       colors: {
         red: "#ff0000",
         darkBlue: "#09163B",
-        lightChocolate: "#A07453"
+        lightChocolate: "#A07453",
       },
     },
   },
