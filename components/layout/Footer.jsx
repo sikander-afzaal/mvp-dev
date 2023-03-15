@@ -6,12 +6,12 @@ const Footer = () => {
   return (
     <footer className="bg-darkBlue  w-full flex  justify-center items-center">
       <div className="flex lg:flex-row flex-col justify-center items-center w-full gap-16 ">
-        <div className="flex lg:px-0 px-16 w-full justify-center bg-white  pt-12 pb-10 lg:py-20 lg:rounded-tr-[80px] lg:rounded-br-[80px] items-center flex-col gap-10 lg:gap-16">
+        <div className="flex lg:px-0 px-16 w-full justify-center bg-white  pt-12 pb-10 lg:py-24 lg:rounded-tr-[80px] lg:rounded-br-[80px] items-center flex-col gap-10 lg:gap-16">
           <Image
             src="/rocket.svg"
             style={{ objectFit: "contain" }}
-            width={350}
-            height={350}
+            width={280}
+            height={280}
             alt=""
           />
           <div className=" flex justify-center items-center gap-3">
