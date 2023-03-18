@@ -68,3 +68,8 @@ body::-webkit-scrollbar-thumb {
   /* border: 3px solid #000000; */
   border: 3px solid #0000001c;
 }
+
+.modal-w {
+  width: 100%;
+  max-width: calc(100% - 20px);
+}

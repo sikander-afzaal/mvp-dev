@@ -138,7 +138,7 @@ const TimerModal = ({ short, closeModal }) => {
 
   return (
     <div
-      className={`rounded-[3.5rem] py-12 pb-8 px-8 bg-white w-full w-lg z-10 flex flex-col max-h-[90%] max-w-lg mx-6  ${
+      className={`rounded-[3.5rem] py-12 pb-8 px-8 bg-white w-lg z-10 flex flex-col max-h-[90%] modal-w  ${
         short ? "" : "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
       }`}
     >
