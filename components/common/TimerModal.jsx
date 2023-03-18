@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Button from "./Button";
 
 const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
@@ -134,7 +135,7 @@ const TimerModal = ({ short, closeModal }) => {
     }
 
     setFiveDates(dates);
-  }, [selectedDate]);
+  }, [selectedDate, fiveDates]);
 
   return (
     <div
@@ -143,10 +144,18 @@ const TimerModal = ({ short, closeModal }) => {
       }`}
     >
       <div className="flex items-center gap-5 pb-3">
-        <img className="w-20" src="/user.png" alt="user" />
+        <Image
+          width={80}
+          height={80}
+          className="w-20"
+          src="/user.png"
+          alt="user"
+        />
 
         <div>
-          <div className="text-xl text-[#3b0a0d] font-bold">Let's Talk</div>
+          <div className="text-xl text-[#3b0a0d] font-bold">
+            Let&apos;s Talk
+          </div>
           <div className="text-base text-[#3b0a0d] font-bold">
             Nicolas Machado - CEO
           </div>
@@ -159,8 +168,10 @@ const TimerModal = ({ short, closeModal }) => {
             Date
           </div>
           <div className="bg-[#e5dbd2] py-5 px-5 rounded-2xl flex justify-between items-start h-24">
-            <img
-              className="cursor-pointer w-8 h-8 rotate-180"
+            <Image
+              width={32}
+              height={32}
+              className="cursor-pointer w-5 h-5 rotate-180 sm:w-8 sm:h-8"
               src="/arrow.png"
               alt="arrow"
               onClick={decrementDate}
@@ -186,8 +197,10 @@ const TimerModal = ({ short, closeModal }) => {
               })}
             </div>
 
-            <img
-              className="cursor-pointer w-8 h-8"
+            <Image
+              width={32}
+              height={32}
+              className="cursor-pointer w-5 h-5 sm:w-8 sm:h-8"
               src="/arrow.png"
               alt="arrow"
               onClick={incrementDate}
@@ -222,7 +235,9 @@ const TimerModal = ({ short, closeModal }) => {
         <div className="px-2 py-5 nice-scrollbar overflow-auto">
           <div className="bg-[#ececee] rounded-md overflow-hidden relative">
             <div className="h-8 bg-[#caccdb] w-[1px] absolute left-14 top-2"></div>
-            <img
+            <Image
+              width={24}
+              height={24}
               src="/id-card-clip-alt.png"
               alt="id-card"
               className="w-6 absolute left-4 top-1/2 -translate-y-1/2"
@@ -236,7 +251,9 @@ const TimerModal = ({ short, closeModal }) => {
           </div>
           <div className="bg-[#ececee] rounded-md overflow-hidden mt-4 relative">
             <div className="h-8 bg-[#caccdb] w-[1px] absolute left-14 top-2"></div>
-            <img
+            <Image
+              width={24}
+              height={24}
               src="/circle-envelope.png"
               alt="circle-envelope"
               className="w-6 absolute left-4 top-1/2 -translate-y-1/2"
@@ -250,7 +267,9 @@ const TimerModal = ({ short, closeModal }) => {
           </div>
           <div className="bg-[#ececee] rounded-md overflow-hidden mt-4 relative">
             <div className="h-8 bg-[#caccdb] w-[1px] absolute left-14 top-2"></div>
-            <img
+            <Image
+              width={24}
+              height={24}
               src="/linkedin.png"
               alt="linked-in"
               className="w-6 absolute left-4 top-1/2 -translate-y-1/2"
@@ -383,7 +402,13 @@ const TimerModal = ({ short, closeModal }) => {
             }
           }}
         >
-          <img className="w-6" src="/coffee-cups.png" alt="coffee-cups" />{" "}
+          <Image
+            width={24}
+            height={30}
+            className="w-6"
+            src="/coffee-cups.png"
+            alt="coffee-cups"
+          />{" "}
           {!scheduleConfirmed ? "Schedule" : "Book"}
         </button>
       </div>

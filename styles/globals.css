@@ -70,6 +70,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .modal-w {
-  width: 100%;
+  width: 500px;
   max-width: calc(100% - 20px);
 }
