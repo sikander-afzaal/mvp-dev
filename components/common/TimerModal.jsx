@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
 
+const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+
 const getHours = (givenDate) => {
   const givenDateObj = new Date(givenDate);
   const dateNow = new Date();
@@ -49,6 +51,7 @@ const TimerModal = ({ short, closeModal }) => {
     hour: "",
     meridiem: "",
   });
+  const [fiveDates, setFiveDates] = useState([]);
   const [timesState, setTimesState] = useState([
     {
       label: "10:00",
@@ -101,7 +104,6 @@ const TimerModal = ({ short, closeModal }) => {
       const hs = d1.getHours();
       const ms = d1.getMinutes();
       const ss = d1.getSeconds();
-      console.log(d1.toTimeString(), hs, ms, ss);
 
       return d1;
     });
@@ -112,39 +114,89 @@ const TimerModal = ({ short, closeModal }) => {
     setTimesState(getHours(selectedDate));
   }, [selectedDate]);
 
+  useEffect(() => {
+    for (let i = 0; i < fiveDates.length; i++) {
+      const d = new Date(fiveDates[i]);
+      if (
+        d.getDate() === selectedDate.getDate() &&
+        d.getMonth() === selectedDate.getMonth() &&
+        d.getFullYear() === selectedDate.getFullYear()
+      ) {
+        return;
+      }
+    }
+    const dates = [];
+    for (let i = 0; i < 5; i++) {
+      const d1 = new Date(selectedDate);
+      d1.setDate(d1.getDate() + i);
+
+      dates.push(d1);
+    }
+
+    setFiveDates(dates);
+  }, [selectedDate]);
+
   return (
     <div
-      className={`rounded-3xl pt-10 pb-6 px-6 bg-gray-100 w-full max-w-[350px] z-10 flex flex-col max-h-[90%] ${
+      className={`rounded-[3.5rem] py-12 pb-8 px-8 bg-white w-full w-lg z-10 flex flex-col max-h-[90%] max-w-lg mx-6  ${
         short ? "" : "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
       }`}
     >
-      <div className="flex justify-between items-center">
-        <img
-          className="cursor-pointer w-7 rotate-90"
-          src="/caret.png"
-          onClick={decrementDate}
-        />
-        <div className="text-4xl text-center font-dumbledore">
-          {new Date().getDate() === selectedDate.getDate() &&
-          new Date().getMonth() === selectedDate.getMonth() &&
-          new Date().getFullYear() === selectedDate.getFullYear()
-            ? "TODAY"
-            : new Date().getDate() + 1 === selectedDate.getDate() &&
-              new Date().getMonth() === selectedDate.getMonth() &&
-              new Date().getFullYear() === selectedDate.getFullYear()
-            ? "TOMORROW"
-            : `${selectedDate.getDate()} / ${selectedDate.getMonth() + 1}`}
+      <div className="flex items-center gap-5 pb-3">
+        <img className="w-20" src="/user.png" alt="user" />
+
+        <div>
+          <div className="text-xl text-[#3b0a0d] font-bold">Let's Talk</div>
+          <div className="text-base text-[#3b0a0d] font-bold">
+            Nicolas Machado - CEO
+          </div>
         </div>
-        <img
-          className="cursor-pointer w-7 -rotate-90"
-          src="/caret.png"
-          onClick={incrementDate}
-        />
       </div>
 
       {!scheduleConfirmed ? (
-        <div className="px-2 flex-grow bg-gray-200 rounded-[40px] mt-5 py-5">
-          <div className="px-4 flex flex-col items-center overflow-auto nice-scrollbar">
+        <div className="flex-grow mt-6 nice-scrollbar overflow-auto">
+          <div className="text-base text-[#290002] font-extrabold mb-4">
+            Date
+          </div>
+          <div className="bg-[#e5dbd2] py-5 px-5 rounded-2xl flex justify-between items-start h-24">
+            <img
+              className="cursor-pointer w-8 h-8 rotate-180"
+              src="/arrow.png"
+              alt="arrow"
+              onClick={decrementDate}
+            />
+
+            <div className="flex-grow flex justify-evenly">
+              {fiveDates.map((el, idx) => {
+                return (
+                  <div key={el} className="text-center">
+                    <div className="font-bold leading-none">
+                      {days[el.getDay()]}
+                    </div>
+                    <div className="font-bold leading-none">{el.getDate()}</div>
+
+                    {new Date(selectedDate).getDate() === el.getDate() &&
+                      new Date(selectedDate).getMonth() === el.getMonth() &&
+                      new Date(selectedDate).getFullYear() ===
+                        el.getFullYear() && (
+                        <div className="w-2 h-2 rounded-full mx-auto bg-[#5e2222] mt-3"></div>
+                      )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <img
+              className="cursor-pointer w-8 h-8"
+              src="/arrow.png"
+              alt="arrow"
+              onClick={incrementDate}
+            />
+          </div>
+          <div className="mt-6 text-base text-[#290002] font-extrabold">
+            Time
+          </div>
+          <div className="flex flex-wrap justify-between mt-4">
             {timesState.map((el, idx) => {
               return (
                 <div
@@ -152,11 +204,11 @@ const TimerModal = ({ short, closeModal }) => {
                   onClick={() => {
                     setSelectedHour({ hour: el.label, meridiem: el.meridiem });
                   }}
-                  className={`last:mb-0 font-sans font-bold text-center rounded-2xl py-3 w-32 mb-5 border-2 border-solid border-black cursor-pointer ${
+                  className={`last:mb-0 h-14 font-sans font-bold text-center rounded-lg py-3 w-32 mt-5 border-2 border-solid cursor-pointer ${
                     el.label === selectedHour.hour &&
                     el.meridiem === selectedHour.meridiem
-                      ? "bg-black text-white"
-                      : "bg-white text-black"
+                      ? "bg-[#654b4a] text-white border-[#654b4a]"
+                      : "bg-[#e5dbd2] text-[#4c2321] border-transparent"
                   }`}
                 >
                   {el.label}{" "}
@@ -167,29 +219,173 @@ const TimerModal = ({ short, closeModal }) => {
           </div>
         </div>
       ) : (
-        <div className="px-2 py-5">
-          <input
-            type="text"
-            className="w-full border-black border-solid border-2 rounded-xl h-12 px-4 font-bold mb-5"
-            placeholder="First Name"
-          />
-          <input
-            type="email"
-            className="w-full border-black border-solid border-2 rounded-xl h-12 px-4 font-bold"
-            placeholder="Email"
-          />
+        <div className="px-2 py-5 nice-scrollbar overflow-auto">
+          <div className="bg-[#ececee] rounded-md overflow-hidden relative">
+            <div className="h-8 bg-[#caccdb] w-[1px] absolute left-14 top-2"></div>
+            <img
+              src="/id-card-clip-alt.png"
+              alt="id-card"
+              className="w-6 absolute left-4 top-1/2 -translate-y-1/2"
+            />
+            <input
+              type="text"
+              className="outline-none bg-transparent w-full h-12 px-5 ml-12"
+              // className="w-full border-black border-solid border-2 rounded-xl h-12 px-4 font-bold mb-5"
+              placeholder="First Name"
+            />
+          </div>
+          <div className="bg-[#ececee] rounded-md overflow-hidden mt-4 relative">
+            <div className="h-8 bg-[#caccdb] w-[1px] absolute left-14 top-2"></div>
+            <img
+              src="/circle-envelope.png"
+              alt="circle-envelope"
+              className="w-6 absolute left-4 top-1/2 -translate-y-1/2"
+            />
+            <input
+              type="email"
+              className="outline-none bg-transparent w-full h-12 px-5 ml-12"
+              // className="w-full border-black border-solid border-2 rounded-xl h-12 px-4 font-bold"
+              placeholder="Email"
+            />
+          </div>
+          <div className="bg-[#ececee] rounded-md overflow-hidden mt-4 relative">
+            <div className="h-8 bg-[#caccdb] w-[1px] absolute left-14 top-2"></div>
+            <img
+              src="/linkedin.png"
+              alt="linked-in"
+              className="w-6 absolute left-4 top-1/2 -translate-y-1/2"
+            />
+            <input
+              type="email"
+              className="outline-none bg-transparent w-full h-12 px-5 ml-12"
+              // className="w-full border-black border-solid border-2 rounded-xl h-12 px-4 font-bold"
+              placeholder="Website or LinkedIn"
+            />
+          </div>
+
+          <div className="mt-5 mb-3 text-base font-extrabold">Budget</div>
+
+          <div className="flex items-center">
+            <label
+              className="relative flex cursor-pointer items-center rounded-full p-2"
+              for="html"
+              data-ripple-dark="true"
+            >
+              <input
+                id="html"
+                name="type"
+                type="radio"
+                className=" peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-[#5e2222] transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#e5dbd2] checked:before:bg-[#e5dbd2]"
+              />
+              <div className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-[#5e2222] opacity-0 transition-opacity peer-checked:opacity-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3.5 w-3.5"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                >
+                  <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                </svg>
+              </div>
+            </label>
+            <label
+              className="mt-px cursor-pointer select-none font-light text-gray-700"
+              for="html"
+            >
+              $1 - $2
+            </label>
+          </div>
+          <div className="flex items-center">
+            <label
+              className="relative flex cursor-pointer items-center rounded-full p-2"
+              for="react"
+              data-ripple-dark="true"
+            >
+              <input
+                id="react"
+                name="type"
+                type="radio"
+                className=" peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#e5dbd2] checked:before:bg-[#e5dbd2]"
+              />
+              <div className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-[#5e2222] opacity-0 transition-opacity peer-checked:opacity-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3.5 w-3.5"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                >
+                  <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                </svg>
+              </div>
+            </label>
+            <label
+              className="mt-px cursor-pointer select-none font-light text-gray-700"
+              for="react"
+            >
+              $2 - $3
+            </label>
+          </div>
+          <div className="flex items-center">
+            <label
+              className="relative flex cursor-pointer items-center rounded-full p-2"
+              for="react"
+              data-ripple-dark="true"
+            >
+              <input
+                id="react"
+                name="type"
+                type="radio"
+                className=" peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#e5dbd2] checked:before:bg-[#e5dbd2]"
+              />
+              <div className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-[#5e2222] opacity-0 transition-opacity peer-checked:opacity-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3.5 w-3.5"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                >
+                  <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                </svg>
+              </div>
+            </label>
+            <label
+              className="mt-px cursor-pointer select-none font-light text-gray-700"
+              for="react"
+            >
+              $4+
+            </label>
+          </div>
+
+          <div class="flex items-center mb-4 ml-3 mt-6">
+            <input
+              type="checkbox"
+              id="checkbox1"
+              class="peer rounded-sm relative h-5 w-5 shrink-0 appearance-none border after:absolute after:left-0 after:top-0 after:h-full after:w-full after:bg-[url('data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCI+PHRpdGxlPmljb25fYnlfUG9zaGx5YWtvdjEwPC90aXRsZT48ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz48ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZyBmaWxsPSIjZmZmZmZmIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNi4wMDAwMDAsIDI2LjAwMDAwMCkiPjxwYXRoIGQ9Ik0xNy45OTk5ODc4LDMyLjQgTDEwLjk5OTk4NzgsMjUuNCBDMTAuMjI2Nzg5MSwyNC42MjY4MDE0IDguOTczMTg2NDQsMjQuNjI2ODAxNCA4LjE5OTk4Nzc5LDI1LjQgTDguMTk5OTg3NzksMjUuNCBDNy40MjY3ODkxNCwyNi4xNzMxOTg2IDcuNDI2Nzg5MTQsMjcuNDI2ODAxNCA4LjE5OTk4Nzc5LDI4LjIgTDE2LjU4NTc3NDIsMzYuNTg1Nzg2NCBDMTcuMzY2ODIyOCwzNy4zNjY4MzUgMTguNjMzMTUyOCwzNy4zNjY4MzUgMTkuNDE0MjAxNCwzNi41ODU3ODY0IEw0MC41OTk5ODc4LDE1LjQgQzQxLjM3MzE4NjQsMTQuNjI2ODAxNCA0MS4zNzMxODY0LDEzLjM3MzE5ODYgNDAuNTk5OTg3OCwxMi42IEw0MC41OTk5ODc4LDEyLjYgQzM5LjgyNjc4OTEsMTEuODI2ODAxNCAzOC41NzMxODY0LDExLjgyNjgwMTQgMzcuNzk5OTg3OCwxMi42IEwxNy45OTk5ODc4LDMyLjQgWiI+PC9wYXRoPjwvZz48L2c+PC9nPjwvc3ZnPg==')] after:bg-[length:40px] after:bg-center after:bg-no-repeat after:content-[''] checked:bg-[#5e2222] focus:outline-none"
+            />
+            <label
+              for="checkbox1"
+              class="w-full cursor-pointer ml-3 text-gray-700 text-sm"
+            >
+              Agree to Terms and Conditions
+            </label>
+          </div>
         </div>
       )}
 
-      <div className="flex justify-center">
-        <Button
-          noShadow
+      <div className="flex justify-center pt-6">
+        <button
+          className="bg-[#5e2222] text-white font-bold rounded-2xl px-6 py-3 text-lg flex items-center gap-2"
           onClick={() => {
-            setScheduleConfirmed(true);
+            if (!scheduleConfirmed) {
+              if (selectedHour.hour && selectedHour.meridiem)
+                setScheduleConfirmed(true);
+            } else {
+            }
           }}
         >
-          {!scheduleConfirmed ? "Confirm schedule" : "Book sprint call"}
-        </Button>
+          <img className="w-6" src="/coffee-cups.png" alt="coffee-cups" />{" "}
+          {!scheduleConfirmed ? "Schedule" : "Book"}
+        </button>
       </div>
     </div>
   );
