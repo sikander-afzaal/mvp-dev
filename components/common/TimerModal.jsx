@@ -77,6 +77,15 @@ const TimerModal = ({ short, closeModal }) => {
   ]);
   const [scheduleConfirmed, setScheduleConfirmed] = useState(false);
 
+  const setDate = (date) => {
+    if (scheduleConfirmed) return;
+    setSelectedDate((prev) => {
+      const d1 = new Date(date);
+
+      return d1;
+    });
+  };
+
   const decrementDate = () => {
     if (scheduleConfirmed) return;
     setSelectedDate((prev) => {
@@ -101,13 +110,61 @@ const TimerModal = ({ short, closeModal }) => {
     setSelectedDate((prev) => {
       const d1 = new Date(prev);
       d1.setDate(d1.getDate() + 1);
-
-      const hs = d1.getHours();
-      const ms = d1.getMinutes();
-      const ss = d1.getSeconds();
-
       return d1;
     });
+  };
+
+  const decrementWeek = () => {
+    if (fiveDates.length) {
+      console.log(
+        new Date(fiveDates[0]).setHours(0, 0, 0, 0) <
+          new Date().setHours(0, 0, 0, 0)
+      );
+
+      let d = new Date();
+      d.setDate(d.getDate() + 5);
+      d = new Date(d);
+      d.setHours(0, 0, 0, 0);
+
+      if (new Date(fiveDates[0]).setHours(0, 0, 0, 0) < d) return;
+      else {
+        const dates = [];
+        for (let i = 1; i <= 5; i++) {
+          const d1 = new Date(fiveDates[0]);
+          d1.setDate(d1.getDate() - i);
+
+          dates.push(d1);
+        }
+
+        dates.reverse();
+
+        setFiveDates(dates);
+      }
+    } else return;
+  };
+
+  const incrementWeek = () => {
+    if (!fiveDates.length) {
+      const dates = [];
+      for (let i = 0; i < 5; i++) {
+        const d1 = new Date(selectedDate);
+        d1.setDate(d1.getDate() + i);
+
+        dates.push(d1);
+      }
+
+      setFiveDates(dates);
+    } else {
+      const dates = [];
+      for (let i = 1; i <= 5; i++) {
+        const d1 = new Date(fiveDates[4]);
+        d1.setDate(d1.getDate() + i);
+
+        dates.push(d1);
+      }
+
+      setFiveDates(dates);
+    }
   };
 
   useEffect(() => {
@@ -116,26 +173,30 @@ const TimerModal = ({ short, closeModal }) => {
   }, [selectedDate]);
 
   useEffect(() => {
-    for (let i = 0; i < fiveDates.length; i++) {
-      const d = new Date(fiveDates[i]);
-      if (
-        d.getDate() === selectedDate.getDate() &&
-        d.getMonth() === selectedDate.getMonth() &&
-        d.getFullYear() === selectedDate.getFullYear()
-      ) {
-        return;
-      }
-    }
-    const dates = [];
-    for (let i = 0; i < 5; i++) {
-      const d1 = new Date(selectedDate);
-      d1.setDate(d1.getDate() + i);
+    incrementWeek();
+  }, []);
 
-      dates.push(d1);
-    }
+  // useEffect(() => {
+  //   for (let i = 0; i < fiveDates.length; i++) {
+  //     const d = new Date(fiveDates[i]);
+  //     if (
+  //       d.getDate() === selectedDate.getDate() &&
+  //       d.getMonth() === selectedDate.getMonth() &&
+  //       d.getFullYear() === selectedDate.getFullYear()
+  //     ) {
+  //       return;
+  //     }
+  //   }
+  //   const dates = [];
+  //   for (let i = 0; i < 5; i++) {
+  //     const d1 = new Date(selectedDate);
+  //     d1.setDate(d1.getDate() + i);
 
-    setFiveDates(dates);
-  }, [selectedDate, fiveDates]);
+  //     dates.push(d1);
+  //   }
+
+  //   setFiveDates(dates);
+  // }, [selectedDate, fiveDates]);
 
   return (
     <div
@@ -174,13 +235,17 @@ const TimerModal = ({ short, closeModal }) => {
               className="cursor-pointer w-5 h-5 rotate-180 sm:w-8 sm:h-8"
               src="/arrow.png"
               alt="arrow"
-              onClick={decrementDate}
+              onClick={decrementWeek}
             />
 
             <div className="flex-grow flex justify-evenly">
               {fiveDates.map((el, idx) => {
                 return (
-                  <div key={el} className="text-center">
+                  <div
+                    key={el}
+                    className="text-center cursor-pointer"
+                    onClick={() => setDate(el)}
+                  >
                     <div className="font-bold leading-none">
                       {days[el.getDay()]}
                     </div>
@@ -203,7 +268,7 @@ const TimerModal = ({ short, closeModal }) => {
               className="cursor-pointer w-5 h-5 sm:w-8 sm:h-8"
               src="/arrow.png"
               alt="arrow"
-              onClick={incrementDate}
+              onClick={incrementWeek}
             />
           </div>
           <div className="mt-6 text-base text-[#290002] font-extrabold">
